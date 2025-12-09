@@ -107,15 +107,6 @@ button:hover {
     <input id="inicio" type="time">
     <input id="fim" type="time">
 
-    <select id="sala">
-      <option value="">Selecione o espaço</option>
-      <option>Laboratório 1</option>
-      <option>Laboratório 2</option>
-      <option>Quadra</option>
-      <option>Auditório</option>
-      <option>Sala Multiuso</option>
-    </select>
-
     <button onclick="salvarReserva()">Salvar Reserva</button>
   </div>
 
@@ -134,7 +125,7 @@ button:hover {
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } 
   from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
+const sala = "Container Gremio"
 // 🔥 CONFIGURAÇÃO DO FIREBASE (PREENCHA AQUI)
 const firebaseConfig = {
    apiKey: "AIzaSyA-TSuzpLpMozoQ44QaezTSPfEYuj_33q0",
@@ -156,14 +147,13 @@ async function salvarReserva() {
   const data = document.getElementById("data").value;
   const inicio = document.getElementById("inicio").value;
   const fim = document.getElementById("fim").value;
-  const sala = document.getElementById("sala").value;
 
   if (!nome || !data || !inicio || !fim || !sala) {
     alert("Preencha todos os campos!");
     return;
   }
-
-  await addDoc(collection(db, "reservas1"), {
+  
+  await addDoc(collection(db, "reservas"), {
     nome,
     data,
     inicio,
@@ -193,6 +183,7 @@ onSnapshot(q, (snapshot) => {
     `;
   });
 });
+window.salvarReserva = salvarReserva;
 
 </script>
 
